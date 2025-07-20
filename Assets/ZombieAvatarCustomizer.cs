@@ -3,7 +3,7 @@ using UnityEngine;
 public class ZombieAvatarCustomizer : MonoBehaviour
 {
     public static ZombieAvatarCustomizer Instance { get; private set; }
-
+    [SerializeField] private GameObject[] zombieAvatars;
     [SerializeField] private GameObject zombieAvatar;
     [SerializeField] private Material[] headMaterials;
     [SerializeField] private Material[] bodyMaterials;
@@ -30,10 +30,10 @@ public class ZombieAvatarCustomizer : MonoBehaviour
         
     }
 
-    public GameObject CreateCustomizedZombie(int headIndex, int bodyIndex, int legIndex, int feetIndex)
+    public GameObject CreateCustomizedZombie(int headIndex, int bodyIndex, int legIndex, int feetIndex, int bodyTypeIndex)
     {
-        GameObject newZombie = Instantiate(zombieAvatar);
-        
+        GameObject newZombie = Instantiate(zombieAvatars[bodyTypeIndex]);
+
         Transform characterMedium = newZombie.transform.Find("characterMedium");
 
         SkinnedMeshRenderer meshRenderer = characterMedium.GetComponent<SkinnedMeshRenderer>();
