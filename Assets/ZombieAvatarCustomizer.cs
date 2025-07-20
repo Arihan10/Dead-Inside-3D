@@ -30,9 +30,10 @@ public class ZombieAvatarCustomizer : MonoBehaviour
         
     }
 
-    public GameObject CreateCustomizedZombie(int headIndex, int bodyIndex, int legIndex, int feetIndex, int bodyTypeIndex)
+    public GameObject CreateCustomizedZombie(int headIndex, int bodyIndex, int legIndex, int feetIndex, int bodyTypeIndex, bool isMale)  
     {
-        GameObject newZombie = Instantiate(zombieAvatars[bodyTypeIndex]);
+        // Body type indices: 0 - fat, 1 - fit, 2 - slim
+        GameObject newZombie = Instantiate(zombieAvatars[bodyTypeIndex + (isMale ? 0 : 3)]);
 
         Transform characterMedium = newZombie.transform.Find("characterMedium");
 
