@@ -26,6 +26,15 @@ public class NavManager : MonoBehaviour
     
     [SerializeField]
     private LayerMask antiZombie;
+    
+    public static NavManager inst { get; private set; }
+
+    public void Awake()
+    {
+        if (inst) Destroy(this);
+        else inst = this;
+    }
+
 
     [Serializable]
     class ZombieAgent
@@ -74,6 +83,18 @@ public class NavManager : MonoBehaviour
                 AddAgent(agent);
             }
         }
+    }
+
+    public NavMeshAgent SpawnZombie(Vector3 spawnPos)
+    {
+        GameObject obj = Instantiate(zombiePrefab, spawnPos, Quaternion.identity);
+        NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            AddAgent(agent);
+        }
+
+        return agent;
     }
     
     private void OnDrawGizmosSelected()
