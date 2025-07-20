@@ -68,7 +68,8 @@ public class NavManager : MonoBehaviour
         Regen();
 
         
-        for (int i = 0; i < 50; i++)
+        ///*
+        for (int i = 0; i < 13; i++)
         {
             Vector3 spawnPos = spawnAreaCenter + new Vector3(
                 Random.Range(-spawnAreaSize.x / 2f, spawnAreaSize.x / 2f),
@@ -83,6 +84,7 @@ public class NavManager : MonoBehaviour
                 AddAgent(agent);
             }
         }
+        //*/
     }
 
     public NavMeshAgent SpawnZombie(Vector3 spawnPos)
@@ -126,8 +128,9 @@ public class NavManager : MonoBehaviour
             List<Transform> altList = new List<Transform>();
             for (int j = 0; j < rayCount; ++j)
             {
-                Transform t = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
-                Destroy(t.GetComponent<Collider>());
+                //Transform t = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+                //Destroy(t.GetComponent<Collider>());
+                Transform t = new GameObject().transform;
                 t.SetParent(targets[i]);
                 altList.Add(t);
             }
