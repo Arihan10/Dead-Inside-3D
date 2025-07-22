@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -10,6 +11,8 @@ public class NavManager : MonoBehaviour
     [SerializeField]
     private List<Transform> targets = new List<Transform>();
 
+    [SerializeField] private List<Transform> spawnpoints = new List<Transform>();
+    
     private List<List<Transform>> alternates = new List<List<Transform>>();
     
     [SerializeField]
@@ -31,7 +34,7 @@ public class NavManager : MonoBehaviour
 
     public void Awake()
     {
-        if (inst) Destroy(this);
+        if (inst || !PhotonNetwork.IsMasterClient) Destroy(this);
         else inst = this;
     }
 
@@ -48,6 +51,13 @@ public class NavManager : MonoBehaviour
             this.targetA = targetA;
             this.targetB = targetB;
         }
+    }
+
+    private int currentSpawn = 0;
+    public Vector3 getNextSpawn()
+    {
+        currentSpawn = (++currentSpawn) % spawnpoints.Count;
+        return spawnpoints[currentSpawn].position;
     }
     
     [SerializeField]
@@ -68,7 +78,7 @@ public class NavManager : MonoBehaviour
         Regen();
 
         
-        ///*
+        /*
         for (int i = 0; i < 13; i++)
         {
             Vector3 spawnPos = spawnAreaCenter + new Vector3(
@@ -84,7 +94,7 @@ public class NavManager : MonoBehaviour
                 AddAgent(agent);
             }
         }
-        //*/
+        */
     }
 
     public NavMeshAgent SpawnZombie(Vector3 spawnPos)
@@ -140,18 +150,27 @@ public class NavManager : MonoBehaviour
     
     [SerializeField] int framesBetweenUpdates = 10;
     private int frameCounter = 0;
+
+    private int currentWave = 0;
+    private string yeah = "Wide range of funny and unusual issues.";
     
     private void Update()
     {
-        // cull invalid
+        // cull invalid/dead
         for (int i = 0; i < zombies.Count; ++i)
         {
-            if (zombies[i].agent == null)
+            if (zombies[i] == null || zombies[i].agent == null)
             {
                 zombies.RemoveAt(i--);
             }
         }
-        
+
+        if (currentWave == 0 )
+        {
+            Debug.Log("NEW ROUND (only round)");
+            GameManager.instance.StartNewWave(7, yeah);
+            ++currentWave;
+        }
         
         
         float step = 360.0f / rayCount;

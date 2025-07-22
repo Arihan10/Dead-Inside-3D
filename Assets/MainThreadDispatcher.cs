@@ -12,7 +12,7 @@ public class MainThreadDispatcher : MonoBehaviour
     {
         if (inst)
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
         else
         {

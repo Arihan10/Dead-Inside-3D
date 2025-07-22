@@ -49,6 +49,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public void StartGame() {
+        Debug.Log("no");
         PhotonNetwork.LoadLevel(1);
     }
 

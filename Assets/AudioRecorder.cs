@@ -11,7 +11,16 @@ public class AudioRecorder : MonoBehaviour
     private int micStartPos;
     private bool isRecording;
 
-    void StartRecording()
+    public static AudioRecorder instance; 
+
+    private void Start()
+    {
+        if (instance != null) Destroy(this); 
+        else instance = this; 
+        DontDestroyOnLoad(gameObject); 
+    }
+
+    public void StartRecording()
     {
         if (Microphone.devices.Length > 0)
         {
@@ -25,7 +34,7 @@ public class AudioRecorder : MonoBehaviour
         }
     }
     
-    AudioClip StopRecording()
+    public AudioClip StopRecording()
     {
         int micEndPos = Microphone.GetPosition(null);
         Microphone.End(null);
@@ -58,7 +67,7 @@ public class AudioRecorder : MonoBehaviour
     }
     */
     
-    string SaveRecording(string name, Action<string> postAction)
+    public string SaveRecording(string name, Action<string> postAction)
     {
         //Debug.Log("Saving");
         var recordedClip = StopRecording();
@@ -98,7 +107,7 @@ public class AudioRecorder : MonoBehaviour
     [SerializeField] private bool recording = false;
     private void Update()
     {
-        if (Keyboard.current[Key.Space].wasPressedThisFrame)
+        /*if (Keyboard.current[Key.Space].wasPressedThisFrame)
         {
             recording = !recording;
             if (recording)
@@ -114,11 +123,11 @@ public class AudioRecorder : MonoBehaviour
                     if (outputPath != null)
                     {
                         var data = new { file_path = outputPath };
-                        WebReq.inst.Post("stt", data);
+                        WebReq.instance.Post("stt", data);
                     }
                 });
             }
-        }
+        }*/
     }
 }
 

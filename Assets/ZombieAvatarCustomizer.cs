@@ -30,9 +30,10 @@ public class ZombieAvatarCustomizer : MonoBehaviour
         
     }
 
-    public GameObject CreateCustomizedZombie(int headIndex, int bodyIndex, int legIndex, int feetIndex, int bodyTypeIndex)
+    public GameObject CreateCustomizedZombie(int headIndex, int bodyIndex, int legIndex, int feetIndex, int bodyTypeIndex, bool isMale)  
     {
-        GameObject newZombie = Instantiate(zombieAvatars[bodyTypeIndex]);
+        // Body type indices: 0 - fat, 1 - fit, 2 - slim
+        GameObject newZombie = Instantiate(zombieAvatars[bodyTypeIndex + (isMale ? 0 : 3)]);
 
         Transform characterMedium = newZombie.transform.Find("characterMedium");
 
@@ -40,18 +41,11 @@ public class ZombieAvatarCustomizer : MonoBehaviour
 
         Material[] materials = meshRenderer.materials;
         
-        // Set materials at specific indices (skipping index 3 for hands)
-        if (materials.Length > 0 && headIndex < headMaterials.Length)
-            materials[0] = headMaterials[headIndex];
-        
-        if (materials.Length > 1 && bodyIndex < bodyMaterials.Length)
-            materials[1] = bodyMaterials[bodyIndex];
-        
-        if (materials.Length > 2 && legIndex < legMaterials.Length)
-            materials[2] = legMaterials[legIndex];
-        
-        if (materials.Length > 4 && feetIndex < feetMaterials.Length)
-            materials[4] = feetMaterials[feetIndex];
+        // 0 is head, 1 is body, 2 is leg, 3 is hand, 4 is feet
+        materials[0] = headMaterials[headIndex];
+        materials[1] = bodyMaterials[bodyIndex];
+        materials[2] = legMaterials[legIndex]; // materials[3] is the hand
+        materials[4] = feetMaterials[feetIndex];
 
         meshRenderer.materials = materials;
 

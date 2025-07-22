@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerGroundedCheck : MonoBehaviour
 {
-    PlayerController playerController;
+    PlayerMovement playerController;
 
     private void Awake() {
-        playerController = GetComponentInParent<PlayerController>();
+        playerController = GetComponentInParent<PlayerMovement>();
     }
 
     private void OnTriggerEnter(Collider other) {

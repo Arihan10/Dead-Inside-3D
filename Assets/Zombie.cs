@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -36,6 +37,7 @@ public class Zombie : MonoBehaviour
         Debug.Log("eng");
         skin.gameObject.layer = LayerMask.NameToLayer("Highlight");
         realskin.layer = LayerMask.NameToLayer("Highlight");
+        GetComponent<ZombieNPC>().Select();
     }
     
     public void Disengage()
@@ -44,10 +46,13 @@ public class Zombie : MonoBehaviour
         Debug.Log("diseng");
         skin.gameObject.layer = LayerMask.NameToLayer("Default");
         realskin.gameObject.layer = LayerMask.NameToLayer("Default");
+        GetComponent<ZombieNPC>().Deselect();
     }
 
     public void Update()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+        
         Vector3 vel = transform.position - old_pos;
         old_pos = transform.position;
         lerpVel = Vector3.Lerp(lerpVel, vel, Time.deltaTime * 7.0f);

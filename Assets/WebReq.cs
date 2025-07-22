@@ -6,30 +6,30 @@ using Newtonsoft.Json;
 
 public class WebReq : MonoBehaviour
 {
-    public static WebReq inst { get; private set; }
+    public static WebReq instance { get; private set; }
     
     [field: SerializeField]
     public string server { get; private set; } = "http://localhost:8000";
 
     public void Awake()
     {
-        if (inst)
+        if (instance)
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
         else
         {
-            inst = this;
+            instance = this;
         }
     }
 
-    public void Post(string endpoint, object data)
+    public void Post(string endpoint, object data, System.Action<string> callback)
     {
-        StartCoroutine(PostCoroutine(endpoint, data));
+        StartCoroutine(PostCoroutine(endpoint, data, callback));
     }
 
     // data is something like ... var person = new { name = "Edem", age = 18 };
-    private IEnumerator PostCoroutine(string endpoint, object data)
+    private IEnumerator PostCoroutine(string endpoint, object data, System.Action<string> callback)
     {
         string json = JsonConvert.SerializeObject(data);
         Debug.Log(json);
@@ -43,11 +43,13 @@ public class WebReq : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Form upload complete!");
                 Debug.Log("Form upload complete!");
                 Debug.Log("Result: " + www.result);
                 Debug.Log("Response body: " + www.downloadHandler.text);
+
+                callback?.Invoke(www.downloadHandler.text); 
             }
         }
     }
+    
 }

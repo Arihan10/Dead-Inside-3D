@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 18427332697506760}
   - component: {fileID: 6876888611480566808}
   - component: {fileID: 3768555759776863677}
+  - component: {fileID: 7109198941352743464}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -307,11 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf97a2046dffe48a790ff268707ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprintSpeed: 8
-  walkSpeed: 5
-  jumpUpForce: 500
-  smoothTime: 0.1
-  downForce: 40
+  PV: {fileID: 0}
 --- !u!114 &6876888611480566808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,3 +348,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &7109198941352743464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995781077577973038}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b6eb8e0fe4be34ba2111bb57f1704f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprintSpeed: 8
+  walkSpeed: 5
+  jumpUpForce: 500
+  smoothTime: 0.1
+  downForce: 40
